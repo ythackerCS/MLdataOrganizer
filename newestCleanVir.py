@@ -29,7 +29,7 @@ Basic steps are:
 """
 #--- stuff script will need to be provided: 
 classes=7
-foldersAsscociatedWithClasses = ["/Users/admin/Documents/Data organizer/TestFolder", "/Users/admin/Documents/Data organizer/TestFolder2"] 
+foldersAsscociatedWithClasses = ["/Users/admin/Documents/DataOrganizerGit/MLdataOrganizer/TestFolder", "/Users/admin/Documents/DataOrganizerGit/MLdataOrganizer/TestFolder2"] 
 buttonEvents = ["{0}".format(i) for i in range(classes)]
 colorMap = "hot"
 interpolation="nearest"
@@ -37,7 +37,7 @@ interpolation="nearest"
 
 # ------------------------------- PASTE YOUR MATPLOTLIB CODE HERE -------------------------------
 
-pathDir = '/Users/admin/Documents/Data organizer/sample_data/Case D/'
+pathDir = '/Users/admin/Documents/DataOrganizerGit/MLdataOrganizer/sample_data/Case D/'
 images = os.listdir(pathDir)
 data = []
 for s in images:
