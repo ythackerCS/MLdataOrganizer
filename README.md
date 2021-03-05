@@ -9,7 +9,7 @@
   * Pythonsimplegui (hoping to transition to tkinter later) 
 
 ##  How to use:
-  * All the variables that should need altering for use should be in the "#--- stuff script will need to be provided:" region 
+  > All the variables that should need altering for use should be in the "#--- stuff script will need to be provided:" region 
   * provide classNames - these will be the folders that will be made for classification 
   * provide a main classification directory - this is the main directory where the classification folders wil be stored 
   * Optionally: 
