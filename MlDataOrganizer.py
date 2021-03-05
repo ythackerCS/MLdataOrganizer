@@ -1,7 +1,6 @@
 #!/usr/bin/env python
 
 import matplotlib
-import matplotlib.pyplot as plt
 import matplotlib.pylab as plt
 from matplotlib.ticker import NullFormatter  # useful for `logit` scale
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
@@ -21,7 +20,7 @@ import os
 
 
 
-#Sample image sourced at : https://www.visus.com/en/downloads/jivex-dicom-viewer.html
+#Sample images sourced from : https://www.visus.com/en/downloads/jivex-dicom-viewer.html
 
 """
 Demonstrates one way of embedding Matplotlib figures into a PySimpleGUI window.
@@ -106,11 +105,11 @@ def mouse_wheel(event):
     update_depth(currentidx)
 
 def moveTo(index):
-    currnentDir = pathDir
+    currentDir = pathDir
     folder = classNames[int(index)]
     newDir = os.path.join(classificationMainDirectory,folder)
     print("moving to", newDir)
-    shutil.move(currnentDir, newDir)
+    shutil.move(currentDir, newDir)
     window["-FILE LIST-"].update(fnames)
     window.refresh()
 
@@ -176,12 +175,12 @@ while True:
     # print(event)
     if event == "Exit" or event == sg.WIN_CLOSED:
         break
-    # Folder name was filled in, make a list of files in the folder
+
+    # If a slider was moved, update the dept of the image to the corresponding slider value 
     if event == "-SLIDER-":
         if not firstImage: 
             fig = update_depth(values['-SLIDER-'])
-    if event == "Exit" or event == sg.WIN_CLOSED:
-        break
+
     # Folder name was filled in, make a list of files in the folder
     elif event == "-FOLDER-":
         folder = values["-FOLDER-"]
@@ -197,12 +196,15 @@ while True:
                             fnames.append(folder_path)
         window["-FILE LIST-"].update(fnames)
 
-    elif event == "-FILE LIST-":  # A file was chosen from the listbox
+    # A file was chosen from the listbox, take that file and update the image 
+    elif event == "-FILE LIST-":  
         firstImage = False
         try:
             updateImage(values["-FILE LIST-"][0])
         except:
             pass
+
+    #if any of the buttons were pressed, use the event of that button to move the file to the corresponding class folder 
     elif event in buttonEvents:
         moveTo(event)
         folder = values["-FOLDER-"]
