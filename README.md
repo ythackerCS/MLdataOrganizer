@@ -17,7 +17,7 @@
     * change iterpolation to your liking 
   
 ## Running: 
-  * run the program (python3 newestCleanVir.py) - Python 3 is recommended 
+  * run the program (python/python3 MlDataOrganizer.py) - Python 3 is recommended 
   * on the right side there is a browse button click that and select the directory that contains all your cases 
   * Then you can pick any folder and view the images 
   * Use the slider at the bottom to view all parts of the dcm
