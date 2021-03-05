@@ -10,7 +10,6 @@
 
 ##  How to use:
   * All the variables that should need altering for use should be in the "#--- stuff script will need to be provided:" region 
-  * Provide a default image, at pathDir for the program to open initally 
   * provide classNames - these will be the folders that will be made for classification 
   * provide a main classification directory - this is the main directory where the classification folders wil be stored 
   * Optionally: 
@@ -24,6 +23,9 @@
   * Use the slider at the bottom to view all parts of the dcm
   * Select the "class" that the .dcm fits under and this will move the data into that folder for easy organization  
   * The image is moved to the corresponding folder and viewer is updated
+
+## NOTES: 
+  * backupdata - is a folder that contains DCM it is there for you to copy and replace folders in sample data while testing 
   
 ## Future: 
    * json creation 

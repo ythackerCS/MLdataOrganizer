@@ -1,17 +1,24 @@
 #!/usr/bin/env python
-from matplotlib.ticker import NullFormatter  # useful for `logit` scale
-import matplotlib.pyplot as plt
-import numpy as np
-from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
-import PySimpleGUI as sg
+
 import matplotlib
-matplotlib.use('TkAgg')
-import shutil
-import numpy as np
-import pydicom as dicom
+import matplotlib.pyplot as plt
 import matplotlib.pylab as plt
-import os 
+from matplotlib.ticker import NullFormatter  # useful for `logit` scale
+from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
 from matplotlib.widgets import Slider
+matplotlib.use('TkAgg')
+
+import PySimpleGUI as sg
+
+import numpy as np
+from numpy import random
+
+import pydicom as dicom
+
+import shutil
+import os 
+
+
 
 
 #Sample image sourced at : https://www.visus.com/en/downloads/jivex-dicom-viewer.html
@@ -29,7 +36,6 @@ Basic steps are:
  (Thank you Em-Bo & dirck)
 """
 #--- stuff script will need to be provided: 
-pathDir = '/Users/admin/Documents/DataOrganizerGit/MLdataOrganizer/sample_data/Case D/'
 classNames = ["Low Damage", "Medium Damage", "High Damage"]
 classificationMainDirectory = "/Users/admin/Documents/DataOrganizerGit/MLdataOrganizer/"
 colorMap = "hot"
@@ -37,7 +43,6 @@ interpolation="nearest"
 
 
 # ------------------------------- PASTE YOUR MATPLOTLIB CODE HERE -------------------------------
-
 
 for folder in classNames:
     path = os.path.join(classificationMainDirectory,folder)
@@ -49,20 +54,14 @@ for folder in classNames:
             exit() 
 
 buttonEvents = ["{0}".format(i) for i in range(len(classNames))]
-images = os.listdir(pathDir)
+images = []
 data = []
-for s in images:
-    if s.endswith('.dcm'):
-        data.append(dicom.read_file(pathDir + s, force=True))
-try: 
-    data = sorted(data, key=lambda s: s.SliceLocation)
-except:
-    pass
-
+pathDir = ''
+randomImage = np.tile(np.arange(256).reshape(16,16), (16,16)) * 4
 currentidx = 0 
 fig, ax = plt.subplots(figsize=(6, 6), dpi=160)
 fig.subplots_adjust(bottom=0.15)
-im_h = ax.imshow(data[currentidx].pixel_array, cmap=colorMap, interpolation=interpolation)
+im_h = ax.imshow(randomImage, cmap=colorMap, interpolation=interpolation)
 firstImage = True 
 
 # -------------------------------  MATPLOTLIB functions -------------------------------
@@ -71,20 +70,17 @@ def updateImage(newDir):
     global pathDir
     pathDir = newDir + "/"
     images = os.listdir(pathDir)
-    # print(images)
     data = [dicom.read_file(pathDir + s, force=True) for s in images]
     try: 
         data = sorted(data, key=lambda s: s.SliceLocation)
     except:
         pass 
     currentidx = 0 
-    # print("data lenth:", len(data))
     picture = data[currentidx].pixel_array
     im_h.set_data(picture)
     fig.canvas.draw()
     fig.canvas.flush_events()
     updatedLength = len(data)-1
-    # print(updatedLength)
     window["-SLIDER-"].Update(range = (0,updatedLength))
     window.refresh()
 
@@ -182,7 +178,8 @@ while True:
         break
     # Folder name was filled in, make a list of files in the folder
     if event == "-SLIDER-":
-        fig = update_depth(values['-SLIDER-'])
+        if not firstImage: 
+            fig = update_depth(values['-SLIDER-'])
     if event == "Exit" or event == sg.WIN_CLOSED:
         break
     # Folder name was filled in, make a list of files in the folder
@@ -202,11 +199,8 @@ while True:
 
     elif event == "-FILE LIST-":  # A file was chosen from the listbox
         firstImage = False
-        # print("chose file")
         try:
-            # print("new value picked:", values["-FILE LIST-"][0])
             updateImage(values["-FILE LIST-"][0])
-            # print("data length in loo",len(data))
         except:
             pass
     elif event in buttonEvents:
