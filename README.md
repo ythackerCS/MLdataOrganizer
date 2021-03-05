@@ -13,8 +13,8 @@
   * provide classNames - these will be the folders that will be made for classification 
   * provide a main classification directory - this is the main directory where the classification folders wil be stored 
   * Optionally: 
-   * choose a color map 
-   * change iterpolation to your liking 
+    * choose a color map 
+    * change iterpolation to your liking 
   
 ## Running: 
   * run the program 
