@@ -32,7 +32,6 @@ Basic steps are:
 pathDir = '/Users/admin/Documents/DataOrganizerGit/MLdataOrganizer/sample_data/Case D/'
 classNames = ["Low Damage", "Medium Damage", "High Damage"]
 classificationMainDirectory = "/Users/admin/Documents/DataOrganizerGit/MLdataOrganizer/"
-foldersAsscociatedWithClasses = ["LowDamage", "MediumDamage", "HighDamage"] 
 colorMap = "hot"
 interpolation="nearest"
 
@@ -40,7 +39,7 @@ interpolation="nearest"
 # ------------------------------- PASTE YOUR MATPLOTLIB CODE HERE -------------------------------
 
 
-for folder in foldersAsscociatedWithClasses:
+for folder in classNames:
     path = os.path.join(classificationMainDirectory,folder)
     if not os.path.exists(path):
         try:
@@ -112,7 +111,7 @@ def mouse_wheel(event):
 
 def moveTo(index):
     currnentDir = pathDir
-    folder = foldersAsscociatedWithClasses[int(index)]
+    folder = classNames[int(index)]
     newDir = os.path.join(classificationMainDirectory,folder)
     print("moving to", newDir)
     shutil.move(currnentDir, newDir)
