@@ -13,11 +13,11 @@
   * provide classNames - these will be the folders that will be made for classification 
   * provide a main classification directory - this is the main directory where the classification folders wil be stored 
   * Optionally: 
-   * choose a color map 
-   * change iterpolation to your liking 
+    * choose a color map 
+    * change iterpolation to your liking 
   
 ## Running: 
-  * run the program 
+  * run the program (python3 newestCleanVir.py) - Python 3 is recommended 
   * on the right side there is a browse button click that and select the directory that contains all your cases 
   * Then you can pick any folder and view the images 
   * Use the slider at the bottom to view all parts of the dcm
