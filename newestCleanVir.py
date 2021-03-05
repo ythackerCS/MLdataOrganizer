@@ -14,6 +14,7 @@ import os
 from matplotlib.widgets import Slider
 
 
+#Sample image sourced at : https://www.visus.com/en/downloads/jivex-dicom-viewer.html
 
 """
 Demonstrates one way of embedding Matplotlib figures into a PySimpleGUI window.
@@ -28,16 +29,27 @@ Basic steps are:
  (Thank you Em-Bo & dirck)
 """
 #--- stuff script will need to be provided: 
-classes=7
-foldersAsscociatedWithClasses = ["/Users/admin/Documents/DataOrganizerGit/MLdataOrganizer/TestFolder", "/Users/admin/Documents/DataOrganizerGit/MLdataOrganizer/TestFolder2"] 
+pathDir = '/Users/admin/Documents/DataOrganizerGit/MLdataOrganizer/sample_data/Case D/'
+classNames = ["Low Damage", "Medium Damage", "High Damage"]
+classificationMainDirectory = "/Users/admin/Documents/DataOrganizerGit/MLdataOrganizer/"
+foldersAsscociatedWithClasses = ["LowDamage", "MediumDamage", "HighDamage"] 
 colorMap = "hot"
 interpolation="nearest"
 
 
 # ------------------------------- PASTE YOUR MATPLOTLIB CODE HERE -------------------------------
 
-buttonEvents = ["{0}".format(i) for i in range(classes)]
-pathDir = '/Users/admin/Documents/DataOrganizerGit/MLdataOrganizer/sample_data/Case D/'
+
+for folder in foldersAsscociatedWithClasses:
+    path = os.path.join(classificationMainDirectory,folder)
+    if not os.path.exists(path):
+        try:
+            os.mkdir(path)
+        except:
+            print("Folders could not be made")
+            exit() 
+
+buttonEvents = ["{0}".format(i) for i in range(len(classNames))]
 images = os.listdir(pathDir)
 data = []
 for s in images:
@@ -100,7 +112,9 @@ def mouse_wheel(event):
 
 def moveTo(index):
     currnentDir = pathDir
-    newDir = foldersAsscociatedWithClasses[int(index)]
+    folder = foldersAsscociatedWithClasses[int(index)]
+    newDir = os.path.join(classificationMainDirectory,folder)
+    print("moving to", newDir)
     shutil.move(currnentDir, newDir)
     window["-FILE LIST-"].update(fnames)
     window.refresh()
@@ -138,7 +152,11 @@ image_viewer_column = [
     [sg.Text(size=(0, 0), key="-TOUT-")],
     [sg.Canvas(key='-CANVAS-')],
     [sg.Slider((0, len(data)-1), orientation='h', size=(80, 10), enable_events=True, key='-SLIDER-')],
-    [sg.Button("Class "+str(i+1), enable_events=True, key=str(i)) for i in range(classes)]
+    [sg.Button(classNames[i], enable_events=True, key=str(i)) for i in range(len(classNames))]
+]
+
+Other_stuff_column=[
+    [sg.Text("Other features like annotation go here:")],
 ]
 
 # ----- Full layout -----
@@ -147,6 +165,8 @@ layout = [
         sg.Column(file_list_column),
         sg.VSeperator(),
         sg.Column(image_viewer_column),
+        sg.VSeperator(),
+        sg.Column(Other_stuff_column)
     ]
 ]
 
