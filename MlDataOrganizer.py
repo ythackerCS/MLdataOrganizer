@@ -18,8 +18,6 @@ import shutil
 import os 
 
 
-
-
 #Sample images sourced from : https://www.visus.com/en/downloads/jivex-dicom-viewer.html
 
 """
@@ -35,13 +33,24 @@ Basic steps are:
  (Thank you Em-Bo & dirck)
 """
 #--- stuff script will need to be provided: 
+
+#shouldn't need to change  
+classificationMainDirectory = str(os.path.dirname(os.path.realpath(__file__)))
+
+#recomended to change:
 classNames = ["Low Damage", "Medium Damage", "High Damage"]
-classificationMainDirectory = "/Users/admin/Documents/DataOrganizerGit/MLdataOrganizer/"
+
+#optional 
+makeDirArrays = True
+makeNpArrays = True
+NpArrayFolderLocation = classificationMainDirectory+"/FolderOfNpArrays"
 colorMap = "hot"
 interpolation="nearest"
-
+ArrayOfArraysForNP = []
+ArrayOfArraysForFilePaths = []
 
 # ------------------------------- PASTE YOUR MATPLOTLIB CODE HERE -------------------------------
+
 
 for folder in classNames:
     path = os.path.join(classificationMainDirectory,folder)
@@ -51,6 +60,16 @@ for folder in classNames:
         except:
             print("Folders could not be made")
             exit() 
+
+if makeDirArrays or makeNpArrays:
+    for c in classNames:
+        ArrayOfArraysForNP.append([])
+        ArrayOfArraysForFilePaths.append([])
+    if not os.path.exists(NpArrayFolderLocation): 
+        os.mkdir(NpArrayFolderLocation)
+    # classificationMainDirectory = "/Users/admin/Documents/DataOrganizerGit/MLdataOrganizer/"
+
+# print("array of arrays", ArrayOfArraysForNP)
 
 buttonEvents = ["{0}".format(i) for i in range(len(classNames))]
 images = []
@@ -108,7 +127,18 @@ def moveTo(index):
     currentDir = pathDir
     folder = classNames[int(index)]
     newDir = os.path.join(classificationMainDirectory,folder)
-    print("moving to", newDir)
+    # print("moving to", newDir)
+    if makeNpArrays:
+        images = os.listdir(currentDir)
+        data = [dicom.read_file(currentDir + s, force=True) for s in images]
+        imageData = []
+        for dcm in data: 
+            imageData.append(dcm.pixel_array)
+        ArrayOfArraysForNP[int(index)].append(imageData)
+        # exit()
+    if makeDirArrays:
+        ArrayOfArraysForFilePaths[int(index)].append(currentDir)
+
     shutil.move(currentDir, newDir)
     window["-FILE LIST-"].update(fnames)
     window.refresh()
@@ -174,6 +204,31 @@ while True:
     event, values = window.read()
     # print(event)
     if event == "Exit" or event == sg.WIN_CLOSED:
+        if makeNpArrays:
+            for i in range(len(ArrayOfArraysForNP)):
+                # print(i)
+                NpDataArray = np.array(ArrayOfArraysForNP[i]) 
+                fileName = "npArrayDataForClass:{0}".format(classNames[i])
+                # print(len(NpDataArray))
+                if len(NpDataArray) > 0: 
+                    print("saving....", fileName)
+                    np.save(os.path.join(NpArrayFolderLocation, fileName), NpDataArray)
+                else:
+                    print(fileName, " not saved, class", classNames[i], "had 0 images")
+        if makeDirArrays:
+            for i in range(len(ArrayOfArraysForFilePaths)):
+                # print(i)
+                NpDataArray = np.array(ArrayOfArraysForFilePaths[i]) 
+                fileName = "npArrayPathsForClass:{0}".format(classNames[i])
+                # print("saving....", fileName)
+                # print(len(NpDataArray))
+                if len(NpDataArray) > 0: 
+                    print("saving....", fileName)
+                    np.save(os.path.join(NpArrayFolderLocation, fileName), NpDataArray)
+                else:
+                    print(fileName, " not saved, class", classNames[i], "had 0 images")
+            # print(ArrayOfArraysForFilePaths)
+
         break
 
     # If a slider was moved, update the dept of the image to the corresponding slider value 
