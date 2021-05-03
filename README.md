@@ -20,10 +20,10 @@
 ## New Features: 
   * a variables for _makeDirArrays_ and _makeNpArrays_ was added for saving your organized data into np arrays of the dcm image/path arrays if you want to use your data in a different way
   * to make it easier to do ml work, now you can save your data as simplified arrays in two forms: 
-    * if you set _makeDirArrays_ to **TRUE* this will create an np array with the path to each dcm under that particular classification 
-    * if you set _makeNpArrays_ to **TRUE* this will create an np array with the path to each dcm under that particular classification  
-      * *** NOTE: when using the makeNpArrays option if your data is very large it may be hard to save the np array (e.g. not recommended for large data sets of CT scans --> use makeDirArrays, and extract the pixel_array for your use later, if its a single scan e.g. a radiograph/DX/CR/SR this should be managable) ***  
- * all .npy files generated will be stored in a folder called ** FolderOfNpArrays ** under the classificationMainDirectory
+    * if you set _makeDirArrays_ to **TRUE** this will create an np array with the path to each dcm under that particular classification 
+    * if you set _makeNpArrays_ to **TRUE** this will create an np array with the path to each dcm under that particular classification  
+      * ***NOTE: when using the makeNpArrays option if your data is very large it may be hard to save the np array (e.g. not recommended for large data sets of CT scans --> use makeDirArrays, and extract the pixel_array for your use later, if its a single scan e.g. a radiograph/DX/CR/SR this should be managable)***  
+ * all .npy files generated will be stored in a folder called **FolderOfNpArrays** under the classificationMainDirectory
 ## Running: 
   * run the program (python/python3 MlDataOrganizer.py) - Python 3 is recommended 
   * on the right side there is a browse button click that and select the directory that contains all your cases 
@@ -38,4 +38,4 @@
   
 ## Future: 
    * json creation for nvidia Clara 
-   * ~~ removing need for default image ~~ (completed may 3)
+   * ~~removing need for default image~~ (completed may 3)
