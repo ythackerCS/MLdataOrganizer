@@ -7,6 +7,13 @@
 ##  Design: 
   * Used python 
   * Pythonsimplegui (hoping to transition to tkinter later) 
+  * full list of packages needed:
+    * matplot lib
+    * pyplot
+    * PySimpleGUI
+    * numpy
+    * pydiocm
+    * shutil
 
 ##  How to use:
   > All the variables that should need altering for use should be in the "#--- stuff script will need to be provided:" region 
