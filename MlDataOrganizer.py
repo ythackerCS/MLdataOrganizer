@@ -205,13 +205,15 @@ while True:
     # print(event)
     if event == "Exit" or event == sg.WIN_CLOSED:
         if makeNpArrays:
+            # print(ArrayOfArraysForNP)
             for i in range(len(ArrayOfArraysForNP)):
                 # print(i)
-                NpDataArray = np.array(ArrayOfArraysForNP[i]) 
-                fileName = "npArrayDataForClass:{0}".format(classNames[i])
+                NpDataArray = np.array(ArrayOfArraysForNP[i], dtype=object) 
+                fileName = "npArrayDATAForClass-{0}".format(classNames[i])
                 # print(len(NpDataArray))
                 if len(NpDataArray) > 0: 
                     print("saving....", fileName)
+                    # print(os.path.join(NpArrayFolderLocation, fileName))
                     np.save(os.path.join(NpArrayFolderLocation, fileName), NpDataArray)
                 else:
                     print(fileName, " not saved, class", classNames[i], "had 0 images")
@@ -219,7 +221,7 @@ while True:
             for i in range(len(ArrayOfArraysForFilePaths)):
                 # print(i)
                 NpDataArray = np.array(ArrayOfArraysForFilePaths[i]) 
-                fileName = "npArrayPathsForClass:{0}".format(classNames[i])
+                fileName = "npArrayPATHSForClass-{0}".format(classNames[i])
                 # print("saving....", fileName)
                 # print(len(NpDataArray))
                 if len(NpDataArray) > 0: 
