@@ -38,7 +38,7 @@ Basic steps are:
 classificationMainDirectory = str(os.path.dirname(os.path.realpath(__file__)))
 
 #recomended to change:
-classNames = ["Low Damage", "Medium Damage", "High Damage"]
+classNames = ["Low Damage", "Medium Damage", "High Damage", "BAD IMAGE"]
 
 #optional 
 makeDirArrays = True
